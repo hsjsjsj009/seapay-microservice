@@ -1,4 +1,6 @@
- # Seapay
+ # Description
+
+ ## Seapay
  
 Seapay is a fintech app consists of 4 different services
   - API gateway
@@ -23,21 +25,85 @@ The project itself has 4 modules
  # How to use
 
  ### Dependencies
- ```
- brew cask install java
- ```
+ In Linux:
+ - Java 8
+ - Postgresql
+ - Postman
+ 
+ ### Potgresql Linux SetUp (Before that install Postgresql)
+  
+  To access PSQL:
+  ```
+  sudo -u postgres psql
+  ```
+
+  - Create User According to Your Linux Username
+    - Open PSQL
+    - Type this code:
+    ```
+    CREATE USER <username> superuser;
+    ```
+  - Provide User Login
+    - Open PSQL
+    - Type this code:
+    ```
+    ALTER ROLE "<username>" with LOGIN;
+    ```
+  - Grant user access (No Password Required)
+    -  Open ``` pg_hba.conf ```, type this code :
+    ```
+    cd /etc/postgresql/<your version>/main
+    sudo nano pg_hba.conf
+    ```
+    - Change this:
+    ```
+    local       all         postgres            peer
+
+    to
+
+    local       all         postgres            trust
+    ```
+    
+    ```
+    host  all   all         127.0.0.1/32        md5
+
+    to
+
+    host  all   all         127.0.0.1/32        trust
+    ```
+
+  - Restart service
+  ```
+  sudo service postgresql restart
+  ```
 
  ### How to build
+ In Ubuntu
 
  ```
  make all
  ```
 
  ### How to run
+ In Ubuntu
+ 
+ Services:
+ - transaction
+ - gateway
+ - user
+ - wallet
+ - monolith
+
  ```
- make run
+ make run-<services>
  ```
 
+ ### Port
+ - Gateway = 8080
+ - Monolith = 8080
+ - Transaction = 8081
+ - User = 8082
+ - Wallet = 8083
   
 
 
